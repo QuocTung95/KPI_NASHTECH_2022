@@ -1,20 +1,24 @@
 import axios from "axios";
 
+const token = localStorage.getItem("token");
+
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL_API,
   headers: {
     "Content-type": "application/json",
+    ...(token && {Authorization : `Bearer ${localStorage.getItem("access_token")}`})
+    
   },
 });
 
-axiosClient.interceptors.request.use((request) => requestHandler(request));
+// axiosClient.interceptors.request.use((request: any) => requestHandler(request));
 
 axiosClient.interceptors.response.use(
-  (response) => successHandler(response),
-  (error) => errorHandler(error)
+  (response: any) => successHandler(response),
+  (error: any) => errorHandler(error)
 );
 
-const errorHandler = (error) => {
+const errorHandler = (error: any) => {
   console.log("error", error);
   /*
    * When response code is 401, try to refresh the token or logOut.
@@ -41,18 +45,18 @@ const errorHandler = (error) => {
   return Promise.reject(error.response.data);
 };
 
-const successHandler = (response) => {
+const successHandler = (response: any) => {
   return response.data;
 };
 
-const requestHandler = (request) => {
-  const token = localStorage.getItem("token");
+// const requestHandler = (request: any) => {
+//   const token = localStorage.getItem("token");
 
-  if (token) {
-    request.headers.common["Authorization"] = `Bearer ${token}`;
-  }
+//   if (token) {
+//     request.headers.common["Authorization"] = `Bearer ${token}`;
+//   }
 
-  return request;
-};
+//   return request;
+// };
 
 export default axiosClient;

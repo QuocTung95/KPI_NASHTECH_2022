@@ -11,7 +11,6 @@ import { Provider } from 'react-redux'
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { store } from './redux/store'
 import Home from "./views/Home/Home";
 import Profile from "./views/Profile/Profile";
 import Login from "./views/Login/Login";
@@ -19,6 +18,7 @@ import ThemeContextProvider from "./contexts/ThemeContext";
 import AuthContextProvider from "./contexts/AuthContext";
 import Layout from "./views/Layout/Layout";
 import Guard from "./components/Guard/Guard";
+import { setupStore } from "./redux/store";
 // import 'antd/dist/antd.min.css'
 
 const root = ReactDOM.createRoot(
@@ -46,7 +46,7 @@ const allRouters = [
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider store={setupStore()}>
     <ThemeContextProvider>
       <AuthContextProvider>
         <BrowserRouter>

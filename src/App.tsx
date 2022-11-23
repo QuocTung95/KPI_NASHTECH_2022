@@ -15,7 +15,7 @@ import Meta from "antd/lib/card/Meta";
 
 export function App() {
   const { actions, data, loading } = useCommunication();
-
+  console.log('data', data)
   useDidMountEffect(() => {
     actions.fetchList();
   }, []);
